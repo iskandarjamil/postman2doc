@@ -51,13 +51,13 @@ class Request extends AbstractConvert
 
         isset($request['auth']) && $this->setAuth($request['auth']);
 
-        $this->setMethod($request['method']);
+        isset($request['method']) && $this->setMethod($request['method']);
 
-        $this->setHeader($request['header']);
+        isset($request['header']) && $this->setHeader($request['header']);
 
-        $this->setBody($request['body']);
+        isset($request['body']) && $this->setBody($request['body']);
 
-        $this->setUrl($request['url']);
+        isset($request['url']) && $this->setUrl($request['url']);
 
         isset($request['description']) && $this->setDescription($request['description']);
     }
@@ -119,13 +119,13 @@ class Request extends AbstractConvert
         $this->url->convert($type);
         $writer->enter(2);
 
-        if ($this->header->hasHeader()) {
+        if (!is_null($this->header) && $this->header->hasHeader()) {
             $writer->h('HEADER', 5);
             $this->header->convert($type);
             $writer->enter();
         }
 
-        if ($this->body->hasBody()) {
+        if (!is_null($this->body) && $this->body->hasBody()) {
             $writer->h('BODY', 5);
             $this->body->convert($type);
             $writer->enter();
